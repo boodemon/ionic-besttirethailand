@@ -1,0 +1,141 @@
+<ion-view  cache-view="false" view-title="{{ txtmenus.status }}">
+    <ion-content ng-class="padding">
+		<div class="list content-order item-text-warp">
+			<div class="item order-form">
+				<div class="row" ng-if="profile.map_type == 'sale'">
+					<div class="col-25">{{ labels.customer }} : </div>
+					<div class="col">
+						<input type="text" ng-model="search.customer" placeholder="{{ labels.search_cust }}" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-25">{{ labels.date_order }} : </div>
+					<div class="col"><input type="text" ng-model="search.start" ng-click="openDateStart(val)" pattern="dd/MM/YYYY"/></div>
+					<div class="col-10 text-center">-</div>
+					<div class="col"><input type="text" ng-model="search.end" ng-click="openDateEnd(val)"  /></div>
+				</div>
+				<div class="row">
+					<div class="col-25">{{ labels.status }}</div>
+					<div class="col">
+						<select ng-model="search.ordstatus" ng-options="tp.value as tp.text for tp in ordstatus"></select>
+					</div>
+					<div class="col-10 text-right">
+						<button class="button icon ion-search button-positive button-small btn-search" ng-click="doSearch()"></button>
+					</div>
+				</div>
+			</div>
+			<div class="card order-detail" ng-if="cart">
+				<div class="item item-divider">
+					<i class="ion-arrow-right-b"></i> {{ labels.no_order }}
+				</div>
+				<div class="item item-text-wrap item-body">
+					<div class="row">
+						<div class="col-20">{{ labels.customer }}</div>
+						<div class="col"><strong>{{ profile.name }}</strong></div>
+					</div>
+					
+					<div class="row">
+						<div class="col-20">{{ labels.unit }}</div>
+						<div class="col"><strong>{{ sumQty }}</strong>  {{ labels.pcs }}</div>
+						<div class="col-20">{{ labels.total }}</div>
+						<div class="col"><strong>{{ sumPrice | currency:'':0 }}</strong> {{ labels.baht }}</div>
+					</div>
+					
+					<div class="row">
+						<div class="col">{{ labels.transport }}</div>
+						<div class="col"><strong></strong> </div>
+						<div class="col-20">{{ labels.status }} </div>
+						<div class="col"><strong></strong></div>
+					</div>
+				</div>
+				<div class="item item-text-wrap item-footer">
+					<div class="row">
+						<div class="col"><a class="button icon-left ion-plus-circled button-clear button-positive" href="#/app/search">{{ labels.add_product }}</a></div>
+						<div class="col"><a class="button icon-left ion-search button-clear  button-balanced" href="#/app/summary">{{ labels.preview }}</a></div>
+						<div class="col"><a class="button icon-left ion-close-circled button-clear  button-assertive" ng-click="cancleCart()">{{ labels.cancle }}</a></div>
+					</div>
+				</div>
+			</div>	
+			<div ng-repeat="od in ord">
+				<div class="card order-detail" >
+					<div class="item item-divider">
+						<div class="row">
+							<div class="col">
+								<i class="ion-ios-clock-outline"></i> {{ od.created_at }}
+							</div>
+							<div class="col text-right">
+								<span ng-if="od.need_tax == 1">*{{ labels.tax }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="item item-text-wrap item-body">
+						<div class="row">
+							<div class="col-20">{{ labels.customer }}</div>
+							<div class="col"><strong>{{ od.customer_name }}</strong></div>
+						</div>
+						
+						<div class="row">
+							<div class="col-20">{{ labels.unit }}</div>
+							<div class="col"><strong>{{ od.qty }}</strong>  {{ labels.pcs }}</div>
+							<div class="col-20">{{ labels.total }}</div>
+							<div class="col"><strong>{{ od.total_price | currency:'':0 }}</strong> {{ labels.baht }}</div>
+						</div>
+						
+						<div class="row">
+							<div class="col">{{ labels.transport }}</div>
+							<div class="col">
+								<!--
+								<strong ng-if="od.transport">{{ od.transport }}</strong> 
+								-->
+								<strong ng-if="od.transporter_name != ''">{{ od.transporter_name }}</strong> 
+							</div>
+							<div class="col-20">{{ labels.status }} </div>
+							<div class="col"><strong>{{ viewStatus[od.status] }}</strong></div>
+						</div>
+						<small class="assertive">* {{od.remark}}</small>
+						<div class="row">
+							<div class="col" ng-if="od.create_type == 3">
+								{{ labels.sale }} : <span class="text-value">{{ od.sale }}</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-20">{{ labels.device }} : </div>
+							<div class="col"><span class="text-value"> {{ od.device }}</span></div>
+							
+						</div>
+					</div>
+					<div class="item item-text-wrap item-footer" ng-if="od.status != 4">
+						<div class="row button-row">
+												
+							<div class="col text-right" ng-if="od.status == 2">
+								<a href="tel:{{ od.transporter_tel }}" class="button button-balanced button-full"><i class="icon ion-ios-telephone"></i> {{ labels.transport_contact }}</a>
+							</div>
+
+							<div class="col text-right" ng-if="od.status == 0">
+								<a href="#/app/edit/{{od.id}}" class="button button-balanced button-full"><i class="icon ion-ios-compose-outline"></i> {{ labels.edit }}</a>
+							</div>
+						
+							<div class="col text-right">
+								<a href="#app/view/{{od.id}}"class="button  button-positive button-full"><i class="icon ion-search"></i> {{ labels.preview }}</a>
+							</div>
+						
+							<div class="col text-right" ng-if="od.status == 0">
+								<a class="button button-assertive button-full" ng-click="orderCancle(od.id)"><i class="icon ion-close-circled"></i> {{ labels.cancle }}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="item order-detail text-center" ng-if="ord.length == 0">
+				<h3 class="text-value">{{ labels.no_order }}</h3>
+				<p>{{ currDate | date : 'dd-MM-yyyy HH:mm'}}</p>
+			</div>
+		</div>
+		<ul class="paginate" ng-if="page.last_page > 1">
+			<li ng-repeat="pg in paginate" ng-click="changePage(pg)" ng-class="{ 'active' : pg === page.currentPage }">
+				{{ pg }}
+			</li>
+		</ul>
+    </ion-content>
+</ion-view>

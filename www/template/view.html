@@ -1,0 +1,57 @@
+<ion-view view-title="View Order">
+	<!-- BAR -->
+	<ion-nav-buttons side="left" nav-clear>  
+		<a ng-click="doCart()" class="button button-icon icon ion-ios-arrow-back"></a>    
+	</ion-nav-buttons> 
+	<!-- BAR -->
+    <ion-content ng-class="padding">
+		<div class="list item-text-wrap content-summary">
+			<!-- Header order      =============================================================================================================== -->
+			
+			<div class="row head">
+				<div class="col" ><strong ng-if="order.tax">*{{ labels.tax }}</strong></div>
+				<div class="col"><span>Priority : </span><strong>{{ order.priority }}</strong></div>
+			</div>
+			<!-- old order from database =============================================================================================================== -->
+				<div class="item" ng-repeat="(k , o) in detail" ng-if="detail.length > 0">
+					<div class="row">
+						<div class="col">
+						  <h2 class="text-value">{{ o.product }}</h2>
+							<div class="row">
+								<div class="col">{{ labels.price }} <strong>{{ o.price | currency:'':0}}</strong> {{ labels.baht }}</div>
+								<div class="col">{{ labels.sum }} <strong>{{ detail[k].price * detail[k].qty | currency:'':0 }}</strong></div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<div class="assertive" ng-if="o.remark != ''">* {{ o.remark }}"</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-25 text-center">
+							<strong>{{ o.qty }}</strong> {{ labels.pcs }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ======================================================================================================================================== -->
+			<div class="item sum sum-top">
+				<div class="row">
+					<div class="col">{{ labels.total_unit}} </div>
+					<div class="col text-right"><b class="assertive">{{ sumQty |number }}</b></div>
+					<div class="col-20">{{ labels.pcs }}</div>
+				</div>
+			</div>
+			<div class="item sum">
+				<div class="row">
+					<div class="col">{{ labels.total_price }} </div>
+					<div class="col text-right"><b class="assertive">{{ sumPrice |currency:'':0 }}</b></div>
+					<div class="col-20">{{ labels.baht }}</div>
+				</div>
+			</div>
+			<div class="item no-bg">
+				<h2>{{ labels.remark }}</h2>
+				<div class="assertive">{{ order.remark }}</div>
+			</div>
+		</div>    
+	</ion-content>
+</ion-view>

@@ -1,0 +1,35 @@
+<ion-view>
+	<ion-content>
+		<ion-refresher pulling-text="Reload..." on-refresh="doRefresh()"></ion-refresher>
+		<div class="text-center app-logo">
+		<img src="{{wlogo}}" />
+		</div>
+		<div class="text-left register-rule">
+			<p>ยินดีต้อนรับเข้าสู่ระบบ Whole Sale Program</p>
+			<p>ขั้นตอนการลงทะเบียน</p>
+			<p>1. กด “ลงทะเบียน” เพื่อรับรหัส 4 หลัก</p>
+			<p>2. ระบบจะส่งรหัสยืนยัน 4 หลัก กลับมาให้</p>
+			<p>3. รหัสยืนยันจะมีอายุเพียง 7 วันนับจากันที่ลงทะเบียน</p>
+			<p>4. หลังจาก 7 วันรหัสลงทะเบียนจะหายไปจากหน้าจอ</p>
+		</div>
+		<div class="uuid-code text-center">
+			<h1>{{ rand }}</h1>
+		</div>
+		<div class="text-center register-button">
+			<button class="button button-large button-positive" ng-disabled="rand != '- - - -'" ng-click="doRegister();">
+					<p>Register</p>
+					<p>ลงทะเบียน</p>
+			</button>
+		</div>
+		<div class="bar text-left sign-footer">
+			<div ng-show="rand == '- - - -'">
+				<p>สถานะ : <span style="color:#f00; ">คุณยังไม่ได้ลงทะเบียน</span></p>
+			</div>
+			<div ng-show="rand != '- - - -'">
+				<p>สถานะ : <span style="color:#265cff;">รอการตรวจสอบการลงทะเบียน</span></p>
+				<p>รหัสหมดอายุวันที่  : <span style="color:#f00; ">{{  signExpire }}</span></p>
+			</div>
+		</div>
+	</ion-content>
+	
+</ion-view>

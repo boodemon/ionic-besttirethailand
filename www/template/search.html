@@ -1,0 +1,121 @@
+<ion-view view-title="{{ txtmenus.search }}">
+   	<div class="main-bg bg-white" ng-bind-html="watermark( 200 )" ng-if="scResult.length != 0"></div>
+ 	<ion-content class="form-search">
+	<!-- HEAD BUTTON -->
+	<div class="row pan-tab">
+		<div class="col">
+			<a class="button button-block button-search button-active">
+			  SELECTED
+			</a>
+		</div>
+		<div class="col">
+			<a class="button button-block button-search" menu-close href="#/app/keywords">
+			  KEYWORDS
+			</a>
+		</div>
+		<div class="col">
+			<a class="button button-block button-search"  menu-close href="#/app/matching">
+			  MATCHING
+			</a>
+		</div>
+	</div>
+	
+	<!-- HEAD BUTTON -->
+	<div class="pan-form">
+			<div class="row">
+				<div class="col">
+					<div>{{ labels.width }} : </div>
+					<div>
+						<select ng-model="selected.vwidth" ng-change="widthSelected()">
+							<option value=''>{{ labels.all }}</option>
+							<option ng-repeat="w in widths" value="{{w.width}}">{{w.width}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col">
+					<div>{{ labels.ratio }} :</div>
+					<div>
+						<select ng-model="selected.vratio" ng-change="onSelected()">
+							<option value=''>{{ labels.all }}</option>
+							<option ng-repeat="rt in ratios" value="{{rt.ratio}}">{{rt.ratio}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col">
+					<div>{{ labels.rim }} : </div>
+					<div>
+						<select ng-model="selected.vrim" ng-change="onSelected()">
+							<option value=''>{{ labels.all }}</option>
+							<option ng-repeat="r in rims" value="{{r.rim}}">{{r.rim}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row store">
+				<div class="col-45 padding-top-15">
+					<ion-checkbox  ng-model="selected.vstock" value="Y">{{ labels.only_available }}</ion-checkbox>
+				</div>
+				<div class="col padding-top-15 text-right input">
+					<span>
+					Sort :
+					</span> 
+					<select ng-model="selected.sort" ng-change="onSort()">
+							<option value='model'>{{ labels.model }}</option>
+							<option value='name'>{{ labels.product_detail }}</option>
+							<option value='price'>{{ labels.price }}</option>
+							<option value='week'>{{ labels.week_year }}</option>
+					</select>
+				</div>
+				<div class="col-10  padding-top-15">
+					<button class="button button-small button-search padding-0 icon ion-search" ng-click="doSC()"></button>
+				</div>
+			</div>
+		</div>
+		<div class="sc-result">
+			<div class="list item-text-wrap search-portrait">
+				<a class="item item-icon-right" 	ng-repeat="sc in scResult"	href="#/app/product/{{sc.id}}">
+					<h2>{{sc.name}}</h2>
+							<p>
+								{{ labels.price }}  <span class="text-value">{{sc.price |currency : '' : 0}}</span>  |
+								{{ labels.week }}   <span class="text-value">{{sc.week}} - {{sc.year}}</span>  |
+								{{ labels.unit }}   <span class="text-value">{{sc.qty}}</span>	
+							</p>
+							<p>
+								Pro : <span class="text-value">{{ sc.etc }}</span>
+							</p>
+					<i class="icon ion-chevron-right assertive"></i>
+				</a>
+				<div class="row" ng-if="scResult.length > 0">
+					System last update : {{ curDate | date : 'dd-MM-yyyy HH:mm'}}
+				</div>
+				<div class="item item-text-warp text-center assertive text-center" ng-if="scResult.length == 0">
+					<h2>{{ labels.notfound_product }}</h2>
+					<p>{{ currDate | date : 'dd-MM-yyyy HH:mm'}}</p>
+				</div>
+			</div>
+
+			<div class="list item-text-wrap search-landscape">
+				<div class="row table-head">
+					<div class="col-50">{{ labels.detail }}</div>
+					<div class="col">{{ labels.price }}</div>
+					<div class="col">{{ labels.week }}</div>
+					<div class="col">{{ labels.unit }}</div>
+				</div>
+				<a class="row table-body" 	ng-repeat="sc in scResult"	href="#/app/product/{{sc.id}}">
+					<div class="col-50">{{sc.name}}</div>
+					<div class="col text-right">{{sc.price |currency : '' : 0}}</div>
+					<div class="col text-center">{{sc.week}}-{{sc.year}}</div>
+					<div class="col text-right">{{sc.qty}}</div>
+				</a>
+				<div class="row" ng-if="scResult.length != 0">
+					System last update : {{ curDate | date : 'dd-MM-yyyy HH:mm'}}
+				</div>
+				<div class="item item-text-warp text-center assertive text-center" ng-if="scResult.length == 0">
+					<h2>{{ labels.notfound_product }}</h2>
+					<p>{{ currDate | date : 'dd-MM-yyyy HH:mm'}}</p>
+				</div>
+			</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

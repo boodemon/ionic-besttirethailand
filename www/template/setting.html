@@ -1,0 +1,75 @@
+<ion-view cache-view="false" view-title="{{ txtmenus.setting }}">
+	<!-- BAR --
+	<ion-nav-buttons side="left" nav-clear>  
+		<a href="#/app/home" class="button button-icon icon ion-home"></a>    
+	</ion-nav-buttons> 
+	<!-- BAR -->
+	<ion-content class="form-setting bg-white">
+		<ion-refresher pulling-text="Reload Setting..." on-refresh="doRefresh()"></ion-refresher>
+
+	<div class="pan-setting padding">
+		<div class="row">
+			<div class="col-25 text-right padding-4">
+				{{ labels.customer }} : 
+			</div>
+			<div class="col padding-4"><span class="text-value">{{ profile.name }}</span></div>
+		</div>
+
+		<div class="row" ng-show="profile.address !== undefined && profile.adress != ''">
+			<div class="col-25 text-right padding-4">{{ labels.address }} :  </div>
+			<div class="col padding-4"><span class="text-value">{{ profile.address }}</span></div>
+		</div>
+
+		<div class="row">
+			<div class="col-25 text-right  padding-4">{{ labels.tel }} :  </div>
+			<div class="col padding-4">
+				<span class="text-value"  ng-show="profile.mobile !== undefined && profile.mobile != ''">{{ profile.mobile }}</span> 
+				<span class="text-value"  ng-show="profile.tel !== undefined && profile.tel != ''">,{{ profile.tel }}</span>
+			</div>
+		</div>
+		<!--
+		<div class="row">
+			<div class="col-20">แผนที่</div>
+		</div>
+		-->
+		<div class="row" ng-show="user.lat != '' && user.lat !== undefined && user.lon != '' && user.lon !== undefined">
+			<div class="col map" ng-click="openMap()">
+				<div id="map"></div>
+			</div>
+		</div>
+		<br/>
+		<!--:: Price Setting ::-->
+		<p class="text-base font-14px">{{ labels.rule_sale }} : </p>
+		
+
+		<ion-radio class="border-1 radio padding-0 rule_sale" ng-model="filter.show" value="wholesale" name="choice">{{ labels.show_costs_price }}</ion-radio>
+		<ion-radio class="border-1 padding-0 rule_sale" ng-model="filter.show" value="pricesale" name="choice">{{ labels.show_sale_price }}</ion-radio>
+		
+		<div class="row setting-price text-center padding-top-15">
+			<span>{{ labels.set_price }}</span>
+			<input type="text" class="col-15 input-setting input-percen" ng-model="setting.percent" />
+			<span>% {{ labels.or_min_price }}</span>
+			<input type="text" class="col-15 input-setting input-price" ng-model="setting.price" />
+			<span>{{ labels.baht }}</span>
+		</div>
+		<small class="color-red">* {{ labels.system_select }}</small>
+		<!-- :: langues setting ::-->
+		</div>
+		<hr/>
+		<div class="text-base title-lang padding">{{ labels.set_lang }} : </div>
+
+		<div class="row pan-lang">
+			<div class="col padding-0">
+			<ion-radio ng-model="filter.lang" class=" border-1 padding-0 set-lang radio" ng-value="'th'">ไทย</ion-radio>
+			</div>
+			<div class="col padding-0">
+			<ion-radio ng-model="filter.lang" class=" border-1 padding-0 set-lang radio" ng-value="'en'">English</ion-radio>
+			</div>
+		</div>
+		<br/>
+			<button class="button button-full button-positive" ng-click="doSetting()">
+				{{ labels.save_change }}
+			</button>
+	
+	</ion-content>
+</ion-view>

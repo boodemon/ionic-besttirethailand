@@ -1,0 +1,93 @@
+<ion-view  cache-view="false"  view-title="{{txtmenus.product_detail}}">
+	<!-- BAR -->
+	<ion-nav-buttons side="left" nav-clear>  
+		<a ng-click="myGoBack()" class="button button-icon icon ion-chevron-left"></a>    
+	</ion-nav-buttons> 
+	<!-- BAR -->
+    <ion-content ng-class="">
+		<ion-refresher pulling-text="Reload Product..." on-refresh="doRefresh()"> </ion-refresher>
+
+		<input type="hidden" ng-model="res.product_id" id="product_id" value="{{ pr.product_id }}" />
+		<div class="incart text-right bg-white qty-bar">
+			<span>{{ labels.product }}</span> 
+			<span class="text-value">{{ sumQty | number }}</span> 
+			<span>{{ labels.pcs }}</span>
+			<span> {{ labels.value }}</span> 
+			<span class="text-value">{{ sumPrice |currency:'':0}}</span> 
+			<span>{{ labels.baht }}</span>
+		</div>
+		<div class="content-product bg-white">
+    	<div class="main-bg bg-tranparent" ng-bind-html="watermark(20)"></div>
+			<!--
+			<p>ผู้ผลิต  : <strong>{{ pr.manufacturer }}</strong></p>
+			<p>รุ่น  : <strong>{{ pr.model }}</strong></p>
+
+			-->
+			<div class="padding">
+			<h4>{{ pr.detail }}</h4>
+			<div class="row manufacturer">
+				<div class="col"><label class="text-base">{{ labels.manufact }} : </label><span class="text-value">{{ pr.manufacturer }}</span></div>
+				<div class="col"><label class="text-base">{{ labels.model }} : </label><span class="text-value">{{ pr.model }}</span></div>
+			</div>
+			<div class="row data-product">
+				<div class="col-50">
+					<div class="product-logo" ng-click="doZoom()">
+						<img ng-src="{{ imgstire }}/{{ pr.model_img }}" class="product-img" />
+						<img ng-src="{{ imgsmanu }}/{{ pr.manufacturer_img }}" class="manu-img" />
+					</div>
+				</div>
+				<div class="col data-price">
+					<div class="row">
+						<div class="col-25 label font-14px">{{ labels.code }} : </div>
+						<div class="col text-right"> <span class="text-value font-14px">{{ pr.code }}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-30 label font-14px">{{ labels.price }} : </div>
+						<div class="col text-right"> <span class="text-value">{{ pr.price | currency:'':0 }}</span> <span class="text-base">บาท</span></div>
+					</div>
+					<div class="row">
+						<div class="col-50 label font-14px">{{ labels.unit }} : </div> 
+						<div class="col text-right">
+							<select ng-model="rate.unit" ng-options="option.value as option.label for option in options">
+							</select>
+						</div>
+					</div>
+					<div class="row data-sum">
+						<div class="col-25 label">{{ labels.sum }} : </div>
+						<div class="col sum text-right"><span class="text-value">{{ pr.price * rate.unit | currency:'':0 }}</span> <span class="text-base">บาท</span></div>
+						<input type="hidden" ng-model="rate.salePrice" ng-value="{{ pr.salePrice }}" />
+					</div>
+				</div>
+			</div>
+			<div class="text-base">{{ labels.product_detail }}  : </div>
+			<div class="row data-inline">
+				<div class="col"><label>{{ labels.week_year }} : </label><span>{{ pr.week }} </span></div>
+			</div>
+			<div class="row data-inline">
+				<div class="col"><label>{{ labels.comment}} : </label><span>{{ pr.bestTrieComment }}</span></div>
+			</div>
+			<div class="row data-inline">
+				<div class="col"><label>{{ labels.width }} : </label><span>{{ pr.width }}</span></div>
+				<div class="col"><label>{{ labels.ratio }} : </label><span>{{ pr.ratio }}</span></div>
+				<div class="col"><label>{{ labels.rim }} : </label><span>{{ pr.rim }}</span></div>
+			</div>
+			</div>
+			</div>
+			<div class="content-product ">
+			<div class="padding">
+			<strong class="text-base"> {{ labels.remark }} : </strong>
+			<div class="col margin-bottom-10"><span><input class="input-bg-white" type="text" ng-model="rate.remark" /></span></div>
+			<button class="button button-full button-orange margin-top-0" ng-click="doAddcart()">{{ labels.ok }}</button>
+			</div>
+		</div>
+
+    </ion-content>
+	<script id="my-modal.html" type="text/ng-template">
+		<div class="modal image-modal transparent" ng-click="closeModal()">
+	        <ion-pane class="transparent">
+	            <img ng-src="{{imageSrc}}" class="fullscreen-image"/>
+	        </ion-pane>
+	    </div>
+	</script>
+</ion-view>
+

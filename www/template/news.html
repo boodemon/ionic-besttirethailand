@@ -1,0 +1,19 @@
+<ion-view view-title="">
+<!-- BAR -->
+<ion-nav-buttons side="left">  
+<a href="#/app/home" class="button button-icon icon ion-home"></a>    
+</ion-nav-buttons> 
+  <!-- BAR -->
+  <ion-content class="padding" ng-class="{expanded:isExpanded}">
+  <div class="news-detail">
+	<h1 class="news-title">{{ news.title }}</h1>
+	<p class="news-create"><i class="ion-android-time"></i> {{ news.show_date }}</p>
+	<div class="news-image">
+		<img src="{{ imgs }}/{{ news.picture }}" class="news-picture" />
+	</div>
+	<div class="news-body">
+		{{ news.detail }}
+	</div>
+  </div>
+  </ion-content>
+</ion-view>

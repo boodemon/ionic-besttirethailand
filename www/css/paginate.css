@@ -1,0 +1,24 @@
+.paginate{
+	width:100%;
+	padding:4px;
+	display: block;
+	text-align: center;
+	margin-top:-20px;
+}
+.paginate > li{
+	border:1px solid rgb(144, 148, 151);
+	color:rgb(144, 148, 151);
+	background: rgb(242 , 243 , 244);
+	display: inline-block;
+	text-align: center;
+	padding: 4px;
+	width: 32px;
+	height: 32px;
+	margin-right:1px;
+	border-radius: 2px;
+}
+.paginate > li.active{
+	background: rgb(230 , 126 , 34);
+	border-color:rgb(230 , 126 , 34);
+	color:rgb(253 , 254 , 254);
+}

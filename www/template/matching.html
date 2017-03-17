@@ -1,0 +1,176 @@
+<ion-view view-title="{{ txtmenus.search }}">
+	<div class="main-bg bg-white" ng-bind-html="watermark( 200 )" ng-if="tyre.length != 0"></div>
+	<ion-content class="form-search">
+	<!-- HEAD BUTTON -->
+	<div class="row pan-tab">
+		<div class="col">
+			<a class="button button-block button-search"  menu-close href="#/app/search">
+			  SELECTED
+			</a>
+		</div>
+		<div class="col">
+			<a class="button button-block button-search"  menu-close href="#/app/keywords">
+			  KEYWORDS
+			</a>
+		</div>
+		<div class="col">
+			<a class="button button-block button-search button-active">
+			  MATCHING
+			</a>
+		</div>
+	</div>
+	
+	<!-- HEAD BUTTON -->
+	<div class="tire-form  pan-form">
+					<div class="row text-left">
+						<div class="col-10"></div>
+						<div class="col">
+							{{ labels.width }} :
+						</div>
+						<div class="col">
+							{{ labels.ratio }} :
+						</div>
+						<div class="col">
+							{{ labels.rim }} : 
+						</div>
+					</div>
+					
+					<div class="row tire-front">
+						<div class="col-10">{{ labels.front }}</div>
+						<div class="col">
+							<select ng-model="front.width" ng-change="frontwidthSelected()">
+									<option value=''>{{ labels.all }}</option>
+									<option ng-repeat="w in fwidths" value="{{w.width}}">{{w.width}}</option>
+							</select>
+						</div>
+						<div class="col">
+							<select ng-model="front.ratio" ng-change="frontSelected()">
+									<option value=''>{{ labels.all }}</option>
+									<option ng-repeat="rt in fratios" value="{{rt.ratio}}">{{rt.ratio}}</option>
+							</select>
+						</div>
+						<div class="col">
+							<select ng-model="front.rim" ng-change="frontSelected()">
+									<option value=''>{{ labels.all }}</option>
+									<option ng-repeat="r in frims" value="{{r.rim}}">{{r.rim}}</option>
+								</select>
+						</div>
+					</div>
+					
+					<div class="row  tire-back">
+						<div class="col-10">{{ labels.back }}</div>
+						<div class="col">
+							<select ng-model="back.width" ng-change="backwidthSelected()">
+									<option value=''>{{ labels.all }}</option>
+									<option ng-repeat="w in bwidths" value="{{w.width}}">{{w.width}}</option>
+								</select>
+						</div>
+						<div class="col">
+							<select ng-model="back.ratio" ng-change="backSelected()">
+									<option value=''>{{ labels.all }}</option>
+									<option ng-repeat="rt in bratios" value="{{rt.ratio}}">{{rt.ratio}}</option>
+								</select>
+						</div>
+						<div class="col">
+							<select  ng-model="back.rim" ng-change="backSelected()">
+									<option value=''>{{ labels.all }}</option>
+									<option ng-repeat="r in brims" value="{{r.rim}}">{{r.rim}}</option>
+								</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-45 padding-top-15">
+							<ion-checkbox  ng-model="back.stock" value="Y">{{ labels.only_available }}</ion-checkbox>
+						</div>
+						<div class="col padding-top-15 text-right input">
+							Sort : 
+							<select ng-model="back.sort" ng-change="onSort()">
+								<option value='model'>{{ labels.model }}</option>
+								<option value='name'>{{ labels.product_detail }}</option>
+								<option value='price'>{{ labels.price }}</option>
+								<option value='week'>{{ labels.week_year }}</option>							
+							</select>
+						</div>
+						<div class="col-10  padding-top-15">
+							<button class="button button-small button-search padding-0 icon ion-search" ng-click="doMatching()"></button>
+						</div>
+					</div>
+<!--
+					<div class="row">
+						<div class="col-75">
+							<ion-checkbox ng-model="back.stock" ng-value="Y">แสดงเฉพาะที่มีสินค้า</ion-checkbox>
+						</div>
+						<div class="col-25 text-right">
+							<button class="button button-small button-positive" ng-click="doMatching()"> ค้นหา</button>
+						</div>
+-->
+					</div>
+				</div>
+								
+				<div class="tire-result">
+
+					<ion-list class="list item-text-wrap " ng-if="tyre.length == 0" >
+						<div class="item text-center assertive front-tire">
+							<h2>{{ labels.notfound_product }}</h2>
+							<p>{{ currDate | date : 'dd-MM-yyyy HH:mm'}}</p>
+						</div>
+					</ion-list>
+					<ion-list class="list item-text-wrap  search-portrait" ng-if="tyre.length > 0">
+						<a class="item item-icon-right  {{ ft.css }}" ng-repeat="ft in tyre" href="#/app/product/{{ft.id}}">
+						<div class="watermark-list" ng-bind-html="sub_watermark( 1 )" ng-if="tyre.length != 0 && tyre"></div>
+							<h2>{{ft.name}}</h2>
+							<p>
+								{{ labels.price }}	<span class="text-value">{{ft.price |currency : '' : 0}}</span>  |
+								{{ labels.week }}	<span class="text-value">{{ft.week}} - {{ft.year}}</span>  |
+								{{ labels.unit }} 	<span class="text-value">{{ft.qty}}</span>	
+							</p>
+							<p>
+								Pro : <span class="text-value">{{ ft.etc }}</span>
+							</p>
+							<i class="icon ion-chevron-right assertive"></i>
+						</a>
+						<div class="row">
+							System last update : {{ curDate | date : 'dd-MM-yyyy HH:mm'}}
+						</div>
+					</ion-list>
+
+					<div class="list item-text-wrap  search-landscape"  ng-if="tyre.length != 0">
+
+						<div class="row table-head">
+						<div class="col-50">{{ labels.detail }}</div>
+						<div class="col">{{ labels.price }}</div>
+						<div class="col">{{ labels.week }}</div>
+						<div class="col">{{ labels.unit }}</div>
+						</div>
+						<a class="row table-body  {{ ft.css }}" ng-repeat="ft in tyre" href="#/app/product/{{ft.id}}">.
+						<div class="watermark-list" ng-bind-html="sub_watermark( 1 )" ng-if="tyre.length != 0 && tyre"></div>
+							<div class="col-50">{{ft.name}}</div>
+							<div class="col text-right">{{ft.price}}</div>
+							<div class="col text-center">{{ft.week}}-{{ft.year}}</div>
+							<div class="col text-right">{{ft.qty}}</div>
+						</a>
+						<div class="row">
+							System last update : {{ curDate | date : 'dd-MM-yyyy HH:mm'}}
+						</div>
+					</div>
+
+					<!--
+					<div class="list item-text-wrap back-tire" ng-if="btResult.length == 0" >
+						<div class="item text-center tem-icon-right">
+							<h3>ไม่มีรายการสินค้า ยางหลัง</h3>
+						</div>
+					</div>
+					<ion-list class="list item-text-wrap back-tire">
+						<a class="item item-icon-right " ng-repeat="bt in btResult" href="#/app/product/{{bt.id}}">
+							<h2>{{bt.name}}</h2>
+							<p>
+								ราคา : <strong class="price">{{bt.price |currency : '' : 0}}</strong> บาท 
+								สัปดาห์ : <strong>{{bt.week}}</strong>  จำนวน <strong>{{bt.qty}}</strong>
+							</p>
+							<i class="icon ion-chevron-right assertive"></i>
+						</a>
+					</ion-list>
+					-->
+				</div>
+	</ion-content>
+</ion-view>

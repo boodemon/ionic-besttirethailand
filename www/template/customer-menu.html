@@ -1,0 +1,64 @@
+<ion-side-menus enable-menu-with-back-views="true">
+            <ion-side-menu-content>
+                        <ion-nav-bar class="main-menu" ng-class="" align-title="left">	
+                			<!--
+                            <ion-nav-buttons class="no-text">
+                            </ion-nav-buttons>
+                			-->
+                                    <ion-nav-buttons side="right">
+                                                 <a class="top-cart" href="#/app/summary">
+                                                        <i class="icon ion-ios-cart"></i>
+                                                        <span class="int-cart" ng-if="intQty > 0" >{{ intQty }}</span>
+                                                </a>
+                                                <button class="button button-icon button-clear ion-android-more-vertical color-white" menu-toggle="right"></button>	
+                                     </ion-nav-buttons>
+                        </ion-nav-bar>
+                        <ion-nav-view name="menuContent"></ion-nav-view>
+            </ion-side-menu-content>
+
+            <ion-side-menu side="right">
+                        <ion-header-bar class="head-menu expanded head-menu-title">
+                                    
+                                    <h2>    {{ profile.name }}<br/>
+                        		<small>{{ profile.map_type }}</small>
+                                                <small class="text-right"> [{{ profile.device_type }}]</small>
+                        	</h2>
+                                    			
+                        </ion-header-bar>
+
+                        <ion-content class="stable-bg has-expanded-header head-menu menu-list" scroll="false">
+                                    <ion-list>
+                                                <ion-item nav-clear menu-close ui-sref="#" class="text-right">
+                                			MENU 
+                                                </ion-item>
+                                                <ion-item menu-close href="#/app/home">
+                                                    <i class="icon-menu ion-home"></i> Home | หน้าหลัก
+                                                </ion-item>
+                                                <ion-item menu-close href="#/app/search" ng-if="profile.status == 1">
+                                			<i class="icon-menu ion-search"></i> Search | ค้นหา
+                                                </ion-item>
+                                                <ion-item menu-close  href="#/app/summary" ng-if="profile.status == 1">
+                                			<i class="ion-ios-cart icon-menu"></i> Order | รายการสั่งซื้อ
+                                                </ion-item>
+                                                <ion-item menu-close href="#/app/order" ng-if="profile.status == 1">
+                                                            <i class="icon-menu ion-ios-calendar-outline"></i> Order history | สถานะการสั่งซื้อ
+                                                </ion-item>
+                                                <ion-item menu-close href="#/app/callcenter">
+                                                             <i class="icon-menu ion-android-call"></i> Call Center | ติดต่อเรา
+                                                </ion-item>
+                                                <ion-item menu-close href="#/app/about">
+                                                            <i class="icon-menu ion-ios-people"  ></i> About us | รู้จักเรา 
+                                                </ion-item>
+                                                <ion-item menu-close href="#/app/setting" ng-if="profile.status == 1">
+                                                            <i class="icon-menu ion-gear-a"></i> Setting | ตั้งค่า
+                                                </ion-item>
+                                                <ion-item menu-close ng-click="exitApp()" href="javascript:void(0);" ng-if="platform == 'android'">
+                                                    <i class="icon-menu ion-power"></i> Exit | ออกจากระบบ
+                                                </ion-item>	
+                                                <ion-item menu-close class="menu-bottom-logo">
+                                                        <img src="images/original-logo-100.png"/>
+                                                </ion-item>		
+                                    </ion-list>
+                        </ion-content>
+            </ion-side-menu>
+</ion-side-menus>

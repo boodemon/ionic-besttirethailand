@@ -1,0 +1,50 @@
+<ion-view view-title="{{ txtmenus.aboutus }}">
+<!-- BAR --
+<ion-nav-buttons side="left">  
+	<a href="#/app/home" class="button button-icon icon ion-home"></a>    
+</ion-nav-buttons> 
+  <!-- BAR -->
+  <ion-content class="bg-white">
+  	<div class="pan-about padding">
+  		<div class="text-center">
+  			<img src="{{ imgs }}/{{ about.logo}}" class="about-logo"/>
+
+  		</div>
+  		<div class="padding">
+  		<div class="padding">
+	  		<h4 class="text-value">{{ about.company_name }}</h4>
+			<p>{{ labels.taxcode }} : <span>{{ about.taxid }}</span></p>
+	  		<div class="row">
+	  			<div class="col-20">{{ labels.address }} : </div>
+	  			<div class="col">{{ about.address }}</div>
+	  		</div>
+	  		<h4  class="text-value">Call Center</h4>
+	  		<!--
+			<div class="list call-center">
+				<a class="item item-list no-border no-bg balanced"  ng-repeat="c in about.call" href="tel:{{c}}">
+			    	<i class="icon ion-ios-telephone"></i>
+			    	{{c}}
+			 	</a>
+			</div>
+			-->
+			<div ng-repeat="c in about.call">
+				<div ng-if="$index%2 == 0" class="row">
+					<a class="col-50 item item-list no-border text-call no-bg balanced" href="tel:{{ about.call[$index] }}" ng-if="about.call[$index]">
+				    	<i class="icon ion-ios-telephone"></i>
+				    	{{about.call[$index]}}
+				 	</a>
+				 	<a class="col-50 item item-list no-border text-call no-bg balanced" href="tel:{{ about.call[$index + 1] }}" ng-if="about.call[$index + 1]">
+				    	<i class="icon ion-ios-telephone"></i>
+				    	{{about.call[$index + 1]}}
+				 	</a>
+				</div>
+			</div>
+			<p>{{ labels.email }} : <span class="text-value">{{ about.email }}</span></p>
+			<p>{{ labels.fax }} : <span class="text-value">{{ about.fax }}</span></p>
+			<p>{{ labels.other }} : <pre class="text-value about-other">{{ about.other }}</pre></p>
+			<p><small class="version">App version 1.1.5</small></p>
+		</div>
+		</div>
+	</div>
+  </ion-content>
+</ion-view>

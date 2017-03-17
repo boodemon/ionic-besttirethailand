@@ -1,0 +1,33 @@
+<ion-view view-title="{{txtmenus.home}}">
+	<!--
+    <ion-content ng-class="pan-setting {expanded:isExpanded}">
+		<ion-list class="list" can-swipe="true">
+			<ion-item class="item-remove-animate item item-thumbnail-left item-icon-right item-news" ng-repeat="n in news" type="item-text-wrap" href="#/app/news/{{n.id}}" >
+                <img ng-src="{{ imgs }}/{{n.picture}}">
+                <h2>{{ n.title }}</h2>
+                <p>
+					{{ n.detail }}
+				</p>
+				<i class="icon ion-android-arrow-dropright-circle"></i>
+			</ion-item>
+		</ion-list>
+    </ion-content>
+	-->
+	<ion-content class="padding home-content">
+		<ion-refresher pulling-text="Reload News..." on-refresh="doRefresh()"></ion-refresher>
+		<div class="list news-list">
+			<a class="item item-icon-right item-thumbnail-left item-news " ng-if="n.status == 1" ng-repeat="n in news" href="#/app/news/{{n.id}}">
+				<img ng-src="{{ imgs }}/{{n.picture}}">
+                <h2>{{ n.title }}</h2>
+                <p>	{{ n.detail }}</p>
+                <p><i class="ion-android-time"></i> {{ n.created_at}}</p>
+                
+				<i class="icon ion-android-arrow-dropright-circle assertive"></i>
+			</a>
+			<div class="item item-icon-right  item-news assertive text-center" ng-if="news.length == 0">
+				<h2>ไม่มีรายการข่าว</h2>
+			</div>
+		</div>
+	</ion-content>
+	
+</ion-view>

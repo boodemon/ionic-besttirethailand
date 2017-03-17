@@ -1,0 +1,97 @@
+<ion-view view-title="{{ txtmenus.search }}">
+	<div class="main-bg bg-white" ng-bind-html="watermark( 200)" ng-if="scResult.length != 0"></div>
+	<ion-content class="form-search">
+	<!-- HEAD BUTTON -->
+	<div class="row pan-tab">
+
+		<div class="col">
+			<a class="button button-block button-search"  menu-close href="#/app/search">
+			  SELECTED
+			</a>
+		</div>
+		<div class="col">
+			<a class="button button-block button-search button-active">
+			  KEYWORDS
+			</a>
+		</div>
+		<div class="col">
+			<a class="button button-block button-search"  menu-close href="#/app/matching">
+			  MATCHING
+			</a>
+		</div>
+	</div>
+	
+	<!-- HEAD BUTTON -->
+				<div class="key-search pan-form">
+					<div class="row">
+						<div class="col-20"><label class="text-left">{{ labels.keyword }} : </label></div>
+						<div class="col">		
+							<input type="text" ng-model="searchData.keywords"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-45 padding-top-15">
+							<ion-checkbox ng-model="searchData.stock" ng-value="Y">{{ labels.only_available }}</ion-checkbox>
+						</div>
+						<div class="col padding-top-15 text-right input">
+							Sort : 
+							<select ng-model="searchData.sort" ng-change="onSort()">
+								<option value='model'>{{ labels.model }}</option>
+								<option value='name'>{{ labels.product_detail }}</option>
+								<option value='price'>{{ labels.price }}</option>
+								<option value='week'>{{ labels.week_year }}</option>
+							</select>
+						</div>
+						<div class="col-10  padding-top-15">
+							<button class="button button-small button-search padding-0 icon ion-search" ng-click="doKeyword()"></button>
+						</div>
+					</div>
+				</div>
+				
+				<div class="kw-result" id="key-result">
+					<div class="list item-text-wrap  search-landscape">
+						<div class="row table-head">
+							<div class="col-50">{{ labels.detail }}</div>
+							<div class="col">{{ labels.price }}</div>
+							<div class="col">{{ labels.week }}</div>
+							<div class="col">{{ labels.unit }}</div>
+						</div>
+						<a class="row table-body" ng-repeat="kw in kwResult" href="#/app/product/{{kw.id}}" ng-if="kwResult.length > 0">
+							<div class="col-50">{{kw.name}}</div>
+							<div class="col text-right">{{kw.price}}</div>
+							<div class="col text-center">{{kw.week}}-{{kw.year}}</div>
+							<div class="col text-right">{{kw.qty}}</div>
+						</a>
+						<div class="row" ng-if="kwResult.length > 0">
+							System last update : {{ curDate | date : 'dd-MM-yyyy HH:mm'}}
+						</div>
+						<div class="row table-body assertive text-center" ng-if="kwResult.length == 0">
+							<h2>{{ labels.notfound_product }}</h2>
+							<p>{{ currDate | date : 'dd-MM-yyyy HH:mm'}}</p>
+						</div>
+					</div>
+
+					<div class="list item-text-wrap  search-portrait">
+						<a class="item item-icon-right " ng-repeat="kw in kwResult" href="#/app/product/{{kw.id}}" >
+							<h2>{{kw.name}}</h2>
+							<p>
+								{{ labels.price }}	<span class="text-value">{{kw.price |currency : '' : 0}}</span>  |
+								{{ labels.week }}	<span class="text-value">{{kw.week}} - {{kw.year}}</span>  |
+								{{ labels.unit }} 	<span class="text-value">{{kw.qty}}</span>	
+							</p>
+							<p>
+								Pro : <span class="text-value">{{ kw.etc }}</span>
+							</p>
+							<i class="icon ion-chevron-right assertive"></i>
+						</a>
+						<div class="row" ng-if="kwResult.length > 0">
+							System last update : {{ curDate | date : 'dd-MM-yyyy HH:mm'}}
+						</div>
+						<div class="item item-text-warp assertive text-center" ng-if="kwResult.length == 0">
+							<h2>{{ labels.notfound_product }}</h2>
+							<p>{{ currDate | date : 'dd-MM-yyyy HH:mm'}}</p>
+						</div>
+					</div>
+				</div>
+	</ion-content>
+</ion-view>

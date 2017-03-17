@@ -1,0 +1,15 @@
+<ion-view view-title="{{ txtmenus.call_center }}">
+<!-- BAR -- 
+<ion-nav-buttons side="left">  
+	<a href="#/app/home" class="button button-icon icon ion-home"></a>    
+</ion-nav-buttons> 
+  <!-- BAR -->
+  <ion-content class="padding">
+		<div class="list call-center padding">
+			<a class="item item-icon-left balanced"  ng-repeat="c in about.call" href="tel:{{ c.replace('-','').replace('-','') }}">
+		    	<i class="icon ion-ios-telephone"></i>
+		    	{{ c }}
+		 	</a>
+		</div>
+  </ion-content>
+</ion-view>

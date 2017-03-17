@@ -1,0 +1,21 @@
+<ion-view>
+  <ion-content>
+    <ion-refresher pulling-text="Reload..." on-refresh="doRefresh()"></ion-refresher>
+
+  <!-- BAR -->
+  	<div class="pan-content">
+        <h2>
+          ผู้ใช้งาน : {{ profile.name }}
+          <br/>
+         Device No : {{ profile.device_no }}
+        </h2>
+  		<div class="text-center">
+  			<h2 class="text-danger">ขออภัย ท่านถูกระงับสิทธิในการใช้งาน โปรดทำการติดต่อเจ้าหน้าที่. </h2>
+  			<h2  ng-repeat="c in about.call"><a class="balanced" href="tel:{{c}}">
+		    	<i class="icon ion-ios-telephone"></i>
+		    	{{c}}
+		 	</a></h2>
+  		</div>
+  	</div>
+  </ion-content>
+</ion-view>

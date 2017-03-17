@@ -1,0 +1,159 @@
+<ion-view view-title="{{ txtmenus.edit_order }}">
+	<!-- BAR -->
+	<ion-nav-buttons side="left" nav-clear>  
+		<a ng-click="doCart()" class="button button-icon icon ion-ios-arrow-back"></a>    
+	</ion-nav-buttons> 
+	<!-- BAR -->
+    <ion-content ng-class="padding">
+		<div class="list item-text-wrap content-summary">
+			<!-- Header order      =============================================================================================================== -->
+			<div class="item item-text-wrap" ng-if="profile.map_type != 'customer'">
+				<div class="row">
+					<div class="col-20">{{ labels.customer }} : </div>
+					<div class="col">
+						<ionic-autocomplete autocomplete-input="autocompleteInputAsync" ng-value="{{ order.customer.name }}"></ionic-autocomplete>
+						<!--
+						<input type="text" ng-model="order.customer">
+						-->
+						<input type="hidden" ng-model="order.customer_id" value="{{ customer.id }}">
+					</div>
+					<div class="col-10">
+						<button class="button button-icon icon ion-ios-refresh-outline btn-clear"  ng-click="clearCustomer()"></button>
+					</div>
+				</div>
+				<div class="row" ng-if="customer.id !== undefined && customer.id !== 0">
+					<div class="col-20">{{ labels.address }} : </div>
+					<div class="col"> <span class="text-value " id="c-address">{{ customer.address }}</span></div>
+				</div>
+				<div class="row" ng-if="order.customer.id !== undefined">
+					<div class="col-20">{{ labels.tel }} : </div>
+					<div class="col"> <span class="text-value " id="c-tel">{{ order.customer.tel }}</span></div>
+				</div>
+			</div>
+			<ion-checkbox class="head" ng-model="order.tax">{{ labels.tax }}</ion-checkbox>
+			<div class="bg-white padding">
+				<div class=" border-priority">
+					<label class="item head head-bottom item-input item-select">
+						<div class="input-label col-50">
+							Priority
+						</div>
+						<select ng-model="order.priority" ng-options="prio.id as prio.name for prio in priority" class="col-50">
+						</select>
+					</label>
+				</div>
+			</div>
+			<!--
+			<label class="item head head-bottom item-input item-select">
+				<div class="input-label">
+					ประเภทการขนส่ง
+				</div>
+				<select ng-model="order.transport" ng-options="tp.id as tp.name for tp in trans">
+				</select>
+			</label>
+			-->
+			<!-- In cart add other ================================================================================================================= -->
+			<div class="item summary-body">
+				<div class="item" ng-repeat="(n,c) in apOrder" ng-if="apOrder.length > 0">
+					<div class="row">
+						<div class="col">
+						  <h2 class="text-value">{{ c.detail }}</h2>
+							<div class="row">
+								<div class="col">{{ labels.price }} <span class="text-value">{{ c.price | currency:'':0}}</span> {{ labels.baht }}</div>
+								<div class="col">{{ labels.sum }} <span class="text-value">{{ apOrder[n].price * apOrder[n].qty | currency:'':0 }}</span> {{ labels.baht }}</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<input type="text" class="input-bg-white"  ng-model="apOrder[n].remark" value="{{ c.remark }}" placeholder="* {{ labels.remark }}">
+								</div>
+							</div>
+						</div>
+						<div class="col-20 text-center">
+							<select  ng-change="changeQty()"  ng-model="apOrder[n].qty" ng-options="opt.value as opt.label for opt in opstock"></select><br/>
+							<a class="btn-remove icon ion-trash-a" ng-click="doRemove(n)"></a>
+
+						</div>
+						<!--
+						<div class="col-10 text-center">
+							<a class="button button-icon icon ion-minus-circled assertive"ng-click="doDown(n)"></a>
+						</div>
+						<div class="col-10 text-center">
+							<input type="text" class="text-center" ng-model="apOrder[n].qty" value="{{ c.qty }}"/>
+							<a class="btn-remove icon ion-trash-a assertive" ng-click="doRemove(n)"></a>
+						</div>
+						<div class="col-10 text-center">
+							<a class="button button-icon icon ion-plus-circled balanced" ng-click="doUp(n)"></a>
+						</div>
+						-->
+					</div>
+				</div>
+			<!-- old order from database =============================================================================================================== -->
+				<div class="item" ng-repeat="(k , o) in detail" ng-if="detail.length > 0">
+					<div class="row">
+						<div class="col">
+						  <h2 class="text-value">{{ o.product }}</h2>
+							<div class="row">
+								<div class="col">{{ labels.price }} <span class="text-value">{{ o.price | currency:'':0}}</span> {{ labels.baht }}</div>
+								<div class="col">{{ labels.sum }} <span class="text-value">{{ detail[k].price * detail[k].qty | currency:'':0 }}</span> {{ labels.baht }}</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<input type="text" class="input-bg-white" ng-model="detail[k].remark" value="{{ o.remark }}" placeholder="* {{ labels.remark }}">
+									<input type="hidden" ng-model="detail[k].id" value="{{ o.id }}"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-20 text-center">
+							<select ng-change="changeQty()" ng-model="detail[k].qty" ng-options="opt.value as opt.label for opt in stock"></select><br/>
+							<a class="btn-remove icon ion-trash-a" ng-click="oldRemove(o.id , k)"></a>
+
+						</div>
+						<!--
+						<div class="col-10 text-center">
+							<a class="button button-icon icon ion-minus-circled assertive"ng-click="oldDown(k)"></a>
+						</div>
+						<div class="col-10 text-center">
+							<input type="text" class="text-center" ng-model="detail[k].qty" value="{{ o.qty }}"/>
+							<a class="btn-remove icon ion-trash-a assertive" ng-click="oldRemove(o.id , k)"></a>
+						</div>
+						<div class="col-10 text-center">
+							<a class="button button-icon icon ion-plus-circled balanced" ng-click="oldUp(k)"></a>
+						</div>
+						-->
+					</div>
+				</div>
+			</div>
+			<!-- ======================================================================================================================================== -->
+			<div class="item sum sum-top">
+				<div class="row">
+					<div class="col">{{ labels.total_unit}} </div>
+					<div class="col text-right"><span class="assertive">{{ sumQty |number }}</span></div>
+					<div class="col-20">{{ labels.pcs }}</div>
+				</div>
+			</div>
+			<div class="item sum">
+				<div class="row">
+					<div class="col">{{ labels.total_price }} </div>
+					<div class="col text-right"><span class="assertive">{{ sumPrice |currency:'':0 }}</span></div>
+					<div class="col-20">{{ labels.baht }}</div>
+				</div>
+			</div>
+			<div class="item no-bg">
+				<div class="text-base">{{ labels.remark }}</div>
+				<input type="text"  class="input-bg-white" ng-model="order.remark">
+			</div>
+			<div class="item no-bg">
+				<div class="row button-row">
+					<div class="col">
+						<button ng-click="doCancle()" class="button button-assertive button-full"><i class="ion-android-cancel"></i> {{ labels.cancle }}</button>
+					</div>
+					<div class="col">
+						<a href="#/app/search" nav-clear class="button button-balanced button-full"><i class="ion-ios-plus-outline"></i> {{ labels.add_product }}</a>
+					</div>
+					<div class="col" ng-if="sumQty > 0">
+						<button ng-click="doOrder()" class="button button-positive button-full"><i class="ion-android-checkmark-circle"></i> {{ labels.confirm_order }}</button>
+					</div>
+				</div>
+			</div>
+		</div>    
+	</ion-content>
+</ion-view>
