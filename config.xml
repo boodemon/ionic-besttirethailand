@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.buadmin.thaibesttire" version="1.1.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.besttirethailand.besttire" version="1.1.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Besttire Thailand</name>
   <description>Thai best tire Sale and Customer Care</description>
-  <author email="saimoksolution@gmail.com" href="http://www.thaibesttire.com/">
+  <author email="besttire@besttirethailand.com" href="http://www.besttirethailand.com/">
     thaibesttire
     </author>
   <content src="index.html"/>
