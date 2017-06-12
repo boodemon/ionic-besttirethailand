@@ -1,5 +1,5 @@
-var base_ = 'http://www.thaibesttire.com/wsp/public';
-var img_ = 'http://www.thaibesttire.com/wsp/public/images';
+var base_ = 'http://www.besttirethailand.com/wsp/public';
+var img_ = 'http://www.besttirethailand.com/wsp/public/images';
 
 angular.module('thaibesttire.orderControllers', [])
  /*:: Summary Controller use in Setting Page 

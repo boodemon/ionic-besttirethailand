@@ -1,4 +1,4 @@
-var base_ = 'http://www.thaibesttire.com/wsp/public';
+var base_ = 'http://www.besttirethailand.com/wsp/public';
 angular.module('thaibesttire.service', [])
 .service('wdata',function($http,$state,$cordovaDevice,shoppingCart,$timeout,$ionicModal){
 	this.dataSet = function($scope){
