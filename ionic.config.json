@@ -1,4 +1,12 @@
 {
   "name": "thaibesttire",
-  "app_id": "8045f18a"
+  "app_id": "8045f18a",
+  "integrations": {},
+  "type": "ionic1",
+  "watchPatterns": [
+    "scss/**/*",
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ]
 }

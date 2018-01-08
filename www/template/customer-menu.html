@@ -6,7 +6,7 @@
                             </ion-nav-buttons>
                 			-->
                                     <ion-nav-buttons side="right">
-                                                 <a class="top-cart" href="#/app/summary">
+                                                 <a class="top-cart" href="#/app/summary" ng-if="profile.status != 0">
                                                         <i class="icon ion-ios-cart"></i>
                                                         <span class="int-cart" ng-if="intQty > 0" >{{ intQty }}</span>
                                                 </a>
