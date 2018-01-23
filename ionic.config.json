@@ -1,7 +1,9 @@
 {
   "name": "thaibesttire",
   "app_id": "8045f18a",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic1",
   "watchPatterns": [
     "scss/**/*",

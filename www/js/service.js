@@ -218,7 +218,7 @@ angular.module('thaibesttire.service', [])
 
 	this.showUuid = function(){
 		var $uuid = window.localStorage['wsp_uuid'];
-
+		alert('uuid-0 : ' + $uuid );
 		var createUUID = function(){
 			var d = new Date().getTime();
 			var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -226,51 +226,25 @@ angular.module('thaibesttire.service', [])
 						d = Math.floor(d/16);
 					return (c=='x' ? r : (r&0x3|0x8)).toString(16);
 			});
-			//alert('create uuid random');
-			window.localStorage['wsp_uuid'] = uuid;
 			return uuid;
 		};
 
-		 var patformDevice = ionic.Platform.platform();
-		//	alert( 'platform is ' + patformDevice );
+		var patformDevice = ionic.Platform.platform();
 		if($uuid === undefined || $uuid == '' || $uuid === null){
 
 			if (window.cordova) {
-
-				if( patformDevice == 'ios' ){
-					/*
-					window.IDFVPlugin.getIdentifier(function(result){
-
-										//alert('function uuid device is ');
-										//alert() + result );
-										//var deviceUUID = result; 
-										window.localStorage['wsp_uuid'] = result;
-										//$uuid = result;
-                                      	return result;
-                                    },
-                                    function(error){
-                                    	alert(' false create uuid');
-                                      return false;
-                                    });
-                                    */
-                     //alert('ios device');
-                     return createUUID();
-				}else{
-
-					window.localStorage['wsp_uuid'] = $cordovaDevice.getUUID();
-					$uuid = $cordovaDevice.getUUID();
-				}
+				alert('check cordova' + )$cordovaDevice.getUUID() );
+				var getuid = $cordovaDevice.getUUID();
+				alert( 'check uuid' + getuid );
+				window.localStorage['wsp_uuid'] = $cordovaDevice.getUUID();
 			}else{
-				//$uuid =  
-				//alert('Create Device UUID is  : ' + createUUID() );
-				return createUUID();
+				alert('get uuid from cordova device false');
+				window.localStorage['wsp_uuid'] = createUUID();
 			}
 			$uuid = window.localStorage['wsp_uuid'];
 		}
-		//alert('uuid is ' + window.localStorage['wsp_uuid']);
-		return window.localStorage['wsp_uuid']; //$uuid;
-
-        //$scope.appInfo.uuid = deviceUUID;
+		alert('uuid : ' + $uuid );
+		return $uuid; 
     },
 
 	this.dataUser = function(){
@@ -328,33 +302,15 @@ angular.module('thaibesttire.service', [])
 					$state.go('register');
 					return false;
 				}
-
-				//alert('is status ' + $res.status );
-				//alert('redirect home ' + JSON.stringify( $res ) );
 				if($res.status == '1' || $res.status == '0' ) { 
-					//&& $res.customer_id != 0){
-					//alert('state go home');
-					//$state.go('app.home');
-					//$location.path('#/app/home');
-					//alert(' status is ' + $res.status + ' and redirect t0 t')
 					$state.go('app.home');
-
-					//window.location.href = '#/app/home';
-
 				}else if($res.status == '2' ){
-					//alert('state go suspend');
 					$state.go('suspend');
 				}else{
-					//if(navigator.connection.type !== Connection.NONE) 
-					//alert('state go register');
 					$state.go('register');
 				};
 			},function(error){
-				//alert('Error check id ' + JSON.stringify( error ));
-				//$scope.error = error;
-				//if(navigator.connection.type !== Connection.NONE)
 				$state.go('register');
-
 			});
 	},
 	
@@ -364,8 +320,6 @@ angular.module('thaibesttire.service', [])
 		$http.get( base_ + '/app/profile/' + uuid ).then(function(result){
 			if( result != 'false' ){
 				var $res = result.data;
-				//console.log('result ' + $res.name);
-				//console.log('dataSet result : ' + JSON.stringify( $res ));
 				if($res.map_type == 'sale'){
 					console.log('Sale status : ' + $res.mobile_mode);
 					if($res.mobile_mode == 0)
