@@ -218,7 +218,7 @@ angular.module('thaibesttire.service', [])
 
 	this.showUuid = function(){
 		var $uuid = window.localStorage['wsp_uuid'];
-		alert('uuid-0 : ' + $uuid );
+
 		var createUUID = function(){
 			var d = new Date().getTime();
 			var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -228,23 +228,21 @@ angular.module('thaibesttire.service', [])
 			});
 			return uuid;
 		};
+		//alert('uuid => ' + $uuid );
+		//alert( device.uuid);
 
-		var patformDevice = ionic.Platform.platform();
 		if($uuid === undefined || $uuid == '' || $uuid === null){
-
 			if (window.cordova) {
-				alert('check cordova' + )$cordovaDevice.getUUID() );
-				var getuid = $cordovaDevice.getUUID();
-				alert( 'check uuid' + getuid );
+				//alert('create cordova uuid => ' );
 				window.localStorage['wsp_uuid'] = $cordovaDevice.getUUID();
 			}else{
-				alert('get uuid from cordova device false');
+				//alert('window.cordova false run function createUUID');
 				window.localStorage['wsp_uuid'] = createUUID();
 			}
 			$uuid = window.localStorage['wsp_uuid'];
 		}
-		alert('uuid : ' + $uuid );
-		return $uuid; 
+		
+		return window.localStorage['wsp_uuid']; 
     },
 
 	this.dataUser = function(){
@@ -293,7 +291,7 @@ angular.module('thaibesttire.service', [])
 		var uuid 	= window.localStorage['wsp_uuid'];
 
 		$scope.uuid 	= uuid;
-		console.log('checkUuid is ' + uuid  );
+		//alert('checkUuid is ' + uuid  );
 		
 		$http.get( base_ + '/app/device/' + uuid )
 			.then(function(result){

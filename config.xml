@@ -77,4 +77,5 @@
     </platform>
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
+    <allow-navigation href="http://192.168.124.129:8100" />
 </widget>
