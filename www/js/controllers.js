@@ -4,7 +4,7 @@ var img_ = 'http://www.besttirethailand.com/wsp/public/images';
 angular.module('thaibesttire.controllers', [])
 
 .controller('StarterController',function($scope,$timeout,$state,$http,wdata,$ionicViewService,shoppingCart,$ionicPopup,$cordovaDevice, $location) {
-	//alert('starter page');
+	alert('starter page');
 	window.localStorage.removeItem('user');	
 		$timeout(function() {
 			wdata.checkUuid($scope,$state, $location);
@@ -51,8 +51,10 @@ angular.module('thaibesttire.controllers', [])
   ---------------------------------------------------------------------------------------------------*/
 
  .controller('HomeController', function($scope,$state, wdata,$http,$ionicLoading,shoppingCart,$ionicViewService,$cordovaToast,$ionicPopup) {
- 	// TEST TAOSE //
- 		var onCart = window.localStorage['cart'];
+	 // TEST TAOSE //
+	 	alert('home page');
+		 var onCart = window.localStorage['cart'];
+		 alert('on cart ' + onCart );
 		if( onCart != '' && onCart !== undefined && onCart !== null){
 			var confirmPopup = $ionicPopup.confirm({
 					title : 'System Alert', 
@@ -70,7 +72,7 @@ angular.module('thaibesttire.controllers', [])
 					}
 				});
 		}
-		//alert('home page start');
+		
 
  		shoppingCart.orderClear();
 		var uuid = window.localStorage['wsp_uuid'];
@@ -358,79 +360,43 @@ angular.module('thaibesttire.controllers', [])
 	if(deviceUUID === null || deviceUUID === undefined || deviceUUID == ''){
 		wdata.showUuid($scope);
 		deviceUUID = window.localStorage['wsp_uuid'];
-		//alert('create uuid : ' + deviceUUID);
 	}
-	//alert('has uuid : ' + deviceUUID );
-
-  //   var devices = $cordovaDevice.getDevice();
-/*
-	$scope.doRefresh = function() {
-	 	console.log('reload');
-	 	window.$state.go($state.current, {}, {reload: true});
-	};
-	console.log( deviceUUID );
-*/
-/*
-	if( deviceUUID != '' && deviceUUID !== null && deviceUUID !== undefined ){
-		//console.log('go to home');
-		console.log( 'deviceUUID : ' + deviceUUID );
-		runuuid();
-		//$state.go('app.home');
-	}
-*/
-
-	//$scope.rand = '- - - -';
 	//alert('register page');
 	$http.get( base_ + '/app/device/' + deviceUUID )
 			.then(function(result){
+				//alert( JSON.stringify( result.data ) );
 				var $res = result.data;
 				var nb = $res.random_number;
 				//alert('random number is ' + nb);
 
 				if($res.random_number != 0){
-					/*
-						$scope.rand 		= 	$res.random_number;
-						$scope.signExpire 	=	$res.expire_date;
-						$scope.isEnable = false;
-					alert('register success');
-					*/
-
 					//alert('a');
 					$state.go('app.home');
 
 				}else{
-					/*
-						$scope.rand = '- - - -'
-						$scope.isEnable = true;
-					alert( 'No register ' );
-					*/
-					//alert('b');
 					runuuid();
 				}
 					//$scope.errorLog = data
 				$ionicLoading.hide();
 			},function(error){
 				runuuid();
-				/*
-					console.log('Error');
-					$scope.errorLog = error;
-					$scope.rand = '- - - -'
-					$scope.isEnable = true;
-				*/
 				//alert('c');
-
 				$ionicLoading.hide();
-
 			});
 
 
 	//$scope.doRegister = function(){
 	function runuuid(){
+		var $platform = ionic.Platform.platform();
 		var devicePatform 		=  	ionic.Platform.platform();
 		var deviceVersion 		=  	ionic.Platform.version();
-		var deviceModel 		=  	window.cordova ? ( $cordovaDevice.getModel() !== null ?  $cordovaDevice.getModel() : 'unknow' ): devicePatform + '';
+		alert('platform is ' + $platform );
+		if( $platform == 'ios'){
+			var deviceModel 		=  	ionic.Platform.platform() + ' Device';
+		}else{
+			var deviceModel 		=  	window.cordova ? ( $cordovaDevice.getModel() !== null ?  $cordovaDevice.getModel() : 'unknow' ): devicePatform + '';
+		}
 		var deviceMobile 		= 	ionic.Platform.device();
-		//alert(devicePatform +' version : ' + deviceVersion + ' ' + deviceModel + ' | ' + JSON.stringify( deviceMobile ));
 		$http({
 			method: "POST",
 			url: base_ + "/app/device",
@@ -444,12 +410,6 @@ angular.module('thaibesttire.controllers', [])
 		.then(function(data){
 				console.log('register process');
 				var $res = data.data;
-				/*
-				$scope.rand 		= 	$res.random_number;
-				$scope.signExpire 	=	$res.expire_date;
-				$scope.isEnable = false;
-				$scope.errorLog = data;
-				*/
 				//window.$state.go($state.current, {}, {reload: true});//href="/#/app/home";
 				//alert('d');
 	           	$state.go('app.home');
@@ -457,7 +417,7 @@ angular.module('thaibesttire.controllers', [])
 			},
 			function(error){
 				//alert('e');
-				console.log('Error No process register');
+				alert('Error No process register ' + JSON.stringify( error ) );
 				$scope.errorLog = error;
 				$ionicLoading.hide();
 	         });

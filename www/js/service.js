@@ -220,6 +220,13 @@ angular.module('thaibesttire.service', [])
 		var $uuid = window.localStorage['wsp_uuid'];
 
 		var createUUID = function(){
+			function s4() {
+				return Math.floor((1 + Math.random()) * 0x10000)
+				  .toString(16)
+				  .substring(1);
+			  }
+			  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+			/*
 			var d = new Date().getTime();
 			var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 					var r = (d + Math.random()*16)%16 | 0;
@@ -227,21 +234,24 @@ angular.module('thaibesttire.service', [])
 					return (c=='x' ? r : (r&0x3|0x8)).toString(16);
 			});
 			return uuid;
+			*/
 		};
-		//alert('uuid => ' + $uuid );
-		//alert( device.uuid);
-
-		if($uuid === undefined || $uuid == '' || $uuid === null){
+		var $platform = ionic.Platform.platform();
+		if( $uuid === undefined || $uuid === '' || $uuid === null ){
 			if (window.cordova) {
 				//alert('create cordova uuid => ' );
-				window.localStorage['wsp_uuid'] = $cordovaDevice.getUUID();
+				if( $platform == 'ios'){
+					window.localStorage['wsp_uuid'] = createUUID();
+				}else{
+					window.localStorage['wsp_uuid'] = $cordovaDevice.getUUID();
+				}
 			}else{
 				//alert('window.cordova false run function createUUID');
 				window.localStorage['wsp_uuid'] = createUUID();
 			}
 			$uuid = window.localStorage['wsp_uuid'];
 		}
-		
+		//alert('uuid is ' + $uuid );
 		return window.localStorage['wsp_uuid']; 
     },
 
@@ -296,11 +306,13 @@ angular.module('thaibesttire.service', [])
 		$http.get( base_ + '/app/device/' + uuid )
 			.then(function(result){
 				var $res = result.data;
+				alert( JSON.stringify( $res ) );
 				if($res.random_number == '0'){
 					$state.go('register');
 					return false;
 				}
 				if($res.status == '1' || $res.status == '0' ) { 
+					alert(' state go to app-home' );
 					$state.go('app.home');
 				}else if($res.status == '2' ){
 					$state.go('suspend');
